@@ -61,15 +61,24 @@ window.addEventListener("DOMContentLoaded", function() {
 		}
 	}
 	// Create StoreData Function
-	function storeData(){
+	function storeData(key){
+		//If there is no key, this is a new item and we need to generate a new key
+		if(!key){ 
 		//Create Random Key
 		var 	id									= Math.floor(Math.random()*1000001);
+		} else {
+			//else, set the id to the existing key we're editing so that it will save over the data.
+			//The key is the same key that's been passed along from the editSubmit event handler
+			//to the validate function, and then passed here, into the storeData function.
+			id = key;
+		}
 		getCheckboxValue();
 		// gather up all our form field values and store in an object.
 		// Object properties contain array with the form label and input value.
 		var item = {};
 				item.position				= ["Position:", $('position').value];
 				item.pname				= ["Player Name:", $('pname').value];
+				item.team					= ["Team Name:", $('team').value];
 				item.bye						= ["Bye Week:", $('byeweek').value];
 				item.starter				= ["Starter:", starterValue];
 				item.skill						= ["Skill Level:", $('skill').value];
@@ -90,7 +99,7 @@ window.addEventListener("DOMContentLoaded", function() {
 		document.body.appendChild(makeDiv);
 		var makeList = document.createElement('ul');
 		makeDiv.appendChild(makeList);
-		$('players').style.display = "block";
+		$('players').style.display = "display";
 		for(var i=0, j=localStorage.length; i<j; i++) {
 			var makeLi = document.createElement('li');
 			var linksLi = document.createElement('li');
@@ -107,96 +116,75 @@ window.addEventListener("DOMContentLoaded", function() {
 				makeSubLi.innerHTML = optSubText;
 				makeSubList.appendChild(linksLi);
 			}
-			makeItemLinks(localStorage.key(i), linksLi); // Create Edit and Delete Buttons for each item in localStorage
+			makeItemLinks(localStorage.key(i), linksLi); //Create our edit and delete buttons/links for each item in localStorage.
 		}
-	};
+	}
 	
-	// Make Item Links
+	// Create the edit/delete links for each stored item when displayed.
 	function makeItemLinks(key, linksLi) {
-	//add edit Link
-		var editLink = document.createElement("a");
+		//edit Item Link
+		var editLink = document.createElement('a');
 		editLink.href = "#";
 		editLink.key = key;
 		var editText = "Edit Player";
-		editLink.addEventListener("click", editPlayer);
+		editLink.addEventListener("click", editItem);
 		editLink.innerHTML = editText;
 		linksLi.appendChild(editLink);
 		
-		//add a line Break
-		var breakTag = document.createElement("br");
+		//add line break
+		var breakTag = document.createElement('br');
 		linksLi.appendChild(breakTag);
 		
-		//Create delete variable
-		var deleteLink = document.createElement("a");
+		//Delete Item Link
+		var deleteLink = document.createElement('a');
 		deleteLink.href = "#";
 		deleteLink.key = key;
 		var deleteText = "Delete Player";
-		//deleteLink.addEventListener("click", deletePlayer);
+		deleteLink.addEventListener("click", deleteItem);
 		deleteLink.innerHTML = deleteText;
 		linksLi.appendChild(deleteLink);
 	}
 	
-	function editPlayer() {
-		// Get Data from localStorage
-		var value = localStorage.getItem(this.key);
+	//Edit Item Function
+	function editItem() {
+		//Get data from our item in local storage
+		var  value = localStorage.getItem(this.key);
 		var item = JSON.parse(value);
 		
 		//show the form
 		toggleControls("off");
 		
-		//populate form fields with current localStorage vlaues.
-		$("position").value = item.position[1];
-		$("pname").value = item.pname[1];
-		$("byeweek").value = item.bye[1];
-		if(item.starter[1] == "Yes"){
-			$("starter").setAttribute("checked", "checked");
+		//populate form fields with current localStorage values
+		$('position').value = item.position[1];
+		$('pname').value = item.pname[1];
+		$('team').value = item.team[1];
+		$('byeweek').value = item.bye[1];
+		if(item.starter[1] == "Yes") {
+			$('starter').setAttribute("checked", "checked");
 		}
-		$("skill").value = item.skill[1];
-		$("notes").value = item.notes[1];
+		$('skill').value = item.skill[1];
+		$('notes').value = item.notes[1];
 		
 		//Remove the initial listener from the input 'save contact' button.
-		save.removeEventListener("click", storeData);
-		//change Submit Button Value to Edit Player
+		saveLink.removeEventListener("click", storeData);
+		//Change submit button value to "Edit Player"
 		$('submit').value = "Edit Player";
 		var editSubmit = $('submit');
-		// save the key value established in this function as a property of the editSubmit event
-		//so we can use tht value when we save the data we edit.
+		//Save the key value established in this function as a property of the editSubmit event
+		//So we can use that value when we save the data we edited.
 		editSubmit.addEventListener("click", validate);
 		editSubmit.key = this.key;
 	}
 	
-	function validate(e) {
-		//Define the elements we want to check
-		var getPosition = $("position");
-		var getPname = $("pname");
-		
-		//Reset Error messages
-		errorMessage.innerHTML = "";
-		
-		//Get Error Messages
-		var messageArray = [];
-		//position validation
-		if(getPosition.value === "--Select Position--"	) {
-			var positionError = "Please Select A Position";
-			getPosition.style.border = "1px solid red";
-			messageArray.push(positionError);
+	function deleteItem () {
+		var ask = confirm("Are you sure you want to release this player?");
+		if(ask){
+			localStorage.removeItem(this.key);
+			alert("Player was released!");
+			window.location.reload();
+		}else {
+			alert("Player was NOT released");
 		}
-		//Check Player Name Validation
-		if(getPname.value === "" ) {
-			var pNameError = "Please Enter a Player Name";
-			getPname.style.border= "1px solid red";
-			getPname.push(pNameError);
-		}
-		//If errors are present, display to user
-		if(messageArray.length >= 1) {
-			for(var i=0, j=messageArray.length; i < j; i++){
-				var txt = document.createElement("li");
-				txt.innerHTML = messageArray[i];
-				$("errors").appendChild(txt);
-			};
-		}
-		e.preventDefault();
-		return false;
 	}
 	
 	//function to clear data from localStorage
@@ -211,18 +199,66 @@ window.addEventListener("DOMContentLoaded", function() {
 		}
 	}
 	
+	function validate (e) {
+		//Define the elements we want to check
+		var getPosition = $('position');
+		var getPname = $('pname');
+		var getTeam = $('team');
+		
+		//Reset Error Mesages
+		errMsg.innerHTML = "";
+		getPosition.style.border = "1px solid black";
+		getPname.style.border = "1px solid black";
+		
+		//Get error messages
+		var messageAry = [ ];
+		//Position Validation
+		if(getPosition.value === "--Select Position--") {
+			var positionError = "* Please Choose A Position";
+			getPosition.style.border = "3px solid #a31d1d";
+			messageAry.push(positionError);
+		}
+		
+		//Check for Player Name Validation
+		if(getPname.value === "") {
+			var pNameError = "* Please Enter A Player Name";
+			getPname.style.border = "3px solid #a31d1d";
+			messageAry.push(pNameError);
+		}
+		
+		//Team Validation
+		if(getTeam.value === "") {
+			var teamError = "* Please Enter A Team Name";
+			getTeam.style.border = "3px solid #a31d1d";
+			messageAry.push(teamError);
+		}
+		//If there were errors, display them on the screen
+		if(messageAry.length >= 1) {
+			for(var i=0, j=messageAry.length; i < j; i++) {
+				var txt = document.createElement('li');
+				txt.innerHTML = messageAry[i];
+				errMsg.appendChild(txt);
+			}
+			e.preventDefault();
+			return false;
+		}else{
+			//If all is OK, save our data
+			storeData(this.key);
+		}	
+	}
+	
 	//variable defaults
 	var 	positions = ["--Select Position--", "QB", "RB", "WR", "TE", "K", "DEF"],
 			starterValue = "No",
-			errorMessage = $("errors");
+			errMsg = $('errors');
+;
 	makeDropDown();
-	
 	
 	//Set Link & submit Click Events
 	var displayLink = $('display');
 	displayLink.addEventListener("click", getData);
 	var clearLink = $('clear');
 	clearLink.addEventListener("click", clearLocal);
-	var save = $("submit");
-	save.addEventListener("click", validate);
+	var saveLink = $("submit");
+	saveLink.addEventListener("click", validate);
 });

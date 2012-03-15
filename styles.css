@@ -73,14 +73,10 @@ label {
 }
 
  #submit {
- 	margin: 0px 42% 0px 42%;
+ 	margin: 0px 42% 10px 42%;
  }
-footer {
-	padding: 5px;
-}
 footer a {
 	margin: 20px;
-	padding: 5px;
 	color: #F9A225;
 	text-decoration: none;
 }
@@ -90,14 +86,21 @@ footer a:hover {
 footer a:active {
 	color: #000;
 }
-#players div{
+#players {
 	padding: 0px;
 }
 #players ul {
-	padding: 0px;
-	margin: 10px 0px 10px 0px;
+	padding: 5px;
 }
-#players ul li{
+#players ul li {
 	background-color: #666;
-	padding: 5px 0px 0px 5px;
+	margin-bottom: 5px;
+}
+#players ul li ul li {
+	margin-bottom: 5px;
+}
+#errors {
+	font-size: 14px;
+	color: #a31d1d;
+	font-weight: bold;
 }

@@ -1,0 +1,89 @@
+<!--Visual Frameworks
+	James E. McPherson III
+	Project 1: addPlayer.html
+	1203
+	03/01/2012-->
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<!--Meta Tags-->
+		<meta charset="utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content=""/>
+		<meta name="robots" content="index, follow" />
+		<meta name="viewport" content="user-scalable=no, width=device-width" />
+		<meta name="viewport" content="target-densitydpi=device-dpi"/>
+		<meta name="MobileOptimized" content="320" />
+		
+		<!-- Document Title -->
+		<title> Assignment 1</title>
+		<!--Link CSS File-->
+		<link rel="stylesheet" type="text/css" href="styles.css" />
+		
+	</head>
+	<!--Begin Body-->
+	<body id="addPlayer-page">
+		<!--Header Section-->
+		<header>
+			<div>
+				<h1 id="pageHeader">Add A Player</h1>
+			</div>
+		</header>
+		<!--Begin Form, fieldset, and legend-->
+		<form action="#" method="post" id="addPlayerForm">
+			<fieldset id="addPlayerFieldset"> <!--Creates box around containing material-->
+				<legend>Player Info</legend>
+				<ul id="errors"></ul>
+				<ul id="playerInfo">
+					<!--Select Position w/ dropdown option box-->
+					<li id="select">
+						<label for="position">Select Position:</label>
+							<!--<select id="position">
+								<option value="quarterback">QB</option>
+								<option value="runningback">RB</option>
+								<option value="widereceiver">WR</option>
+								<option value="tightend">TE</option>
+								<option value="kicker">K</option>
+								<option value="defense">DEF</option>
+							</select>-->
+					</li>
+					<!--Name Field w/ text input-->
+					<li>
+						<label for="pname">Player Name:</label>
+						<input type="text" id="pname" />
+					</li>
+					<!--Player Skill w/ range slider-->
+					<li>
+						<label for="byeweek">Bye Week:</label>
+						<input type="date" id="byeweek" />
+					</li>
+					<!--Starter? w/ checkbox-->
+					<li>
+						<label for="starter">Starter:</label>
+						<input type="checkbox" id="starter" value="Yes" class="checkbox" />
+					</li>
+					<!--Bye Week w/ date box-->
+					<li>
+						<label for="skill">Player Skill:</label>
+						<input type="range" min="1" max="10" id="skill" />
+					</li>
+					<!--Notes w/ box for additional user text-->
+					<li>
+						<label for="notes">Notes:</label>
+						<textarea id="notes"></textarea>
+					</li>
+				</ul>
+			</fieldset>
+			<!--Submit Button-->
+			<input type="submit" value="Add Player" id="submit"/>
+		</form>
+		<footer id="footer">
+			<a href="#" id="clear">Clear Stored Data</a>
+			<a href="#" id="display">Display Data</a>
+			<a href="addPlayer.html" id="addNew" style="display:none;">Add New Item</a>
+		</footer>
+		<!--Call Javascript file-->
+		<script src="main.js" type="text/javascript"></script>
+	</body>
+</html>

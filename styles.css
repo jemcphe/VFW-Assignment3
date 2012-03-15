@@ -1,0 +1,103 @@
+/*
+	 James E. McPherson III
+	 Visual Frameworks - Project 2
+	 1203
+	 03/06/2012
+ */
+
+/**************************index.html**************************/
+body {
+	background-color: black;
+	font-family: Arial, Helvetica, sans-serif;
+	color: white;
+	margin: 0px;
+	overflow:hidden;
+}
+
+#logo {
+	width: 70%;
+	margin: 10px 15%;
+}
+
+section {
+	background: #666;
+	margin: 0px;
+	padding: 5px;
+	width: 100%;
+}
+
+p {
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+}
+
+#addPlayerBtn img{
+	width: 75%;
+	margin: 10px 15%;
+}
+
+#pageHeader {
+	font-weight: bold;
+	color: #f9a225;
+	text-align: center;
+}
+/**********************addPlayer.html***********************/
+#addPlayer-page {
+	background-color: #666;
+	overflow: scroll;
+}
+#addPlayer-page div {
+	background-color: #000;
+	width: 100%;
+	height: 10%;
+	margin: 0px;
+	padding: 10px;
+}
+fieldset {
+    color: #F9A225;
+    margin: 5px 20px 10px 20px;
+}
+legend {
+	font-size: 20px;
+	font-weight: bold;
+}
+li {
+	display: block;
+}
+label {
+	font-size: 20px;
+	color: #F9A225;
+	display: block;
+	margin: 5px 0px;
+}
+
+ #submit {
+ 	margin: 0px 42% 0px 42%;
+ }
+footer {
+	padding: 5px;
+}
+footer a {
+	margin: 20px;
+	padding: 5px;
+	color: #F9A225;
+	text-decoration: none;
+}
+footer a:hover {
+	color: white;
+}
+footer a:active {
+	color: #000;
+}
+#players div{
+	padding: 0px;
+}
+#players ul {
+	padding: 0px;
+	margin: 10px 0px 10px 0px;
+}
+#players ul li{
+	background-color: #666;
+	padding: 5px 0px 0px 5px;
+}

@@ -1,8 +1,8 @@
 /*James E. McPherson III
  * Visual Frameworks
- * Project 2
+ * Project 3
  * 1203
- * 03/07/2012
+ * 03/15/2012
  */
 
 // Wait until the DOM is ready.
